@@ -12,7 +12,7 @@ def seed(db: Session) -> None:
         admin = User(
             name="Admin",
             email=settings.admin_email,
-            hashed_password=get_password_hash(settings.admin_password),
+            hashed_password=get_password_hash(settings.admin_password[:72]),
             is_admin=True,
         )
         db.add(admin)
