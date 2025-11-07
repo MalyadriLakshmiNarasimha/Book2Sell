@@ -1,12 +1,12 @@
 [phases.setup]
-nixPkgs = ["python311", "python311Packages.pip"]
+nixPkgs = ["python311", "python311Packages.pip", "python311Packages.virtualenv"]
 nixLibs = ["gcc", "libffi", "openssl"]
 
 [phases.install]
-cmds = ["pip install --break-system-packages -r backend/requirements.txt"]
+cmds = ["python -m venv /opt/venv", "source /opt/venv/bin/activate", "pip install -r backend/requirements.txt"]
 
 [phases.build]
 cmds = ["echo 'Backend ready'"]
 
 [start]
-cmd = "cd backend && uvicorn app.main:app --host 0.0.0.0 --port $PORT"
+cmd = "source /opt/venv/bin/activate && cd backend && uvicorn app.main:app --host 0.0.0.0 --port $PORT"
